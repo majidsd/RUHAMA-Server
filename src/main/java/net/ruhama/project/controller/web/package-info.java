@@ -5,4 +5,4 @@
  * @author MaJiD
  *
  */
-package sd.ruhama.project.repo;
+package net.ruhama.project.controller.web;

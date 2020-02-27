@@ -5,4 +5,4 @@
  * @author MaJiD
  *
  */
-package sd.ruhama.project.model;
+package net.ruhama.project.model;

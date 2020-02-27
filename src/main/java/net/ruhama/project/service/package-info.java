@@ -5,4 +5,4 @@
  * @author MaJiD
  *
  */
-package sd.ruhama.project.controller.web;
+package net.ruhama.project.service;
