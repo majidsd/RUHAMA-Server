@@ -11,7 +11,7 @@ import net.ruhama.project.response.ObjectResponse;
  * @author ahmedozy
  *
  */
-public interface UserService {
+public interface IUserService {
 	public ObjectResponse<UserDto> addUser(UserDto user);
 	public ObjectResponse<UserDto> updateUser(UserDto user);
 	public ObjectResponse<UserDto> deleteUser(UserDto user);
