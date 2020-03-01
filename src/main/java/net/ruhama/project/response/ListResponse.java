@@ -15,7 +15,7 @@ import lombok.Setter;
  *
  */
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class ListReponse<T> extends BaseResponse {
+public class ListResponse<T> extends BaseResponse {
 
 	private List<T> dtos;
 }
