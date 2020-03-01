@@ -12,9 +12,9 @@ import net.ruhama.project.response.ObjectResponse;
  *
  */
 public interface IUserService {
-	public ObjectResponse<UserDto> addUser(UserDto user);
-	public ObjectResponse<UserDto> updateUser(UserDto user);
-	public ObjectResponse<UserDto> deleteUser(UserDto user);
+	public ObjectResponse<UserDto> addUser(UserDto userDto);
+	public ObjectResponse<UserDto> updateUser(UserDto userDto);
+	public ObjectResponse<UserDto> deleteUser(UserDto userDto);
 	public ObjectResponse<UserDto> getUser(Integer userId);
 	public ListResponse<UserDto> getAllUsers();
 

@@ -11,14 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author ahmedozy
  *
  */
-@Getter @Setter @Entity(name = "user")
+@Entity(name = "user")
 public class User  {
 
 	@Id
@@ -34,4 +31,59 @@ public class User  {
 	private Date created_at;
 	@Column(name="last_update", nullable = false)
 	private Date last_update;
+	
+	public User() {
+		this.created_at = new Date();
+		this.last_update = new Date();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+
+	public Date getLast_update() {
+		return last_update;
+	}
+
+	public void setLast_update(Date last_update) {
+		this.last_update = last_update;
+	}
+	
+	
 }
