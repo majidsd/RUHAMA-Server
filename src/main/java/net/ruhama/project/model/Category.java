@@ -7,10 +7,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -53,13 +55,13 @@ public class Category {
 	@JoinColumn(name="last_update", nullable = false)
 	private Date last_update;
 	
-	//@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	//@JoinColumn(name="created_by", nullable = true)
-	//private User created_by;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="created_by", nullable = true)
+	private User created_by;
 	
-	//@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	//@JoinColumn(name="last_update_by", nullable = true)
-	//private User last_update_by;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="last_update_by", nullable = true)
+	private User last_update_by;
 
 	/**
 	 * @return the id
@@ -205,7 +207,7 @@ public class Category {
 	public String toString() {
 		return "Category [id=" + id + ", name=" + name + ", name_ar=" + name_ar + ", type=" + type + ", type_ar="
 				+ type_ar + ", status=" + status + ", max_budget=" + max_budget + ", description=" + description
-				+ ", created_at=" + created_at + ", last_update=" + last_update + "]";
+				+ ", created_at=" + created_at + ", last_update=" + last_update + ", created_by=" + created_by
+				+ ", last_update_by=" + last_update_by + "]";
 	}
-	
 }
