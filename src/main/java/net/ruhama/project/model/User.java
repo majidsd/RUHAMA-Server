@@ -3,6 +3,7 @@
  */
 package net.ruhama.project.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,27 +11,52 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import net.ruhama.project.util.UserStatus;
 
 /**
  * @author ahmedozy
  *
  */
 @Entity(name = "user")
-public class User  {
+public class User implements UserDetails {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7687315936258253938L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column(name = "full_name")
 	private String fullName;
+	
 	@Column(nullable = false)
 	private String username;
+	
 	@Column(nullable = false)
 	private String password;
+	
+	@OneToMany
+	private Collection<Authority> authorities;
+	
+	@Column
+	private UserStatus status;
+	
 	@Column(name="created_at", nullable = false)
 	private Date created_at;
+	
 	@Column(name="last_update", nullable = false)
 	private Date last_update;
+	
+	@Column
+	private boolean enabled;
 	
 	public User() {
 		this.created_at = new Date();
@@ -68,6 +94,20 @@ public class User  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+
+	public void setAuthorities(Collection<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
 
 	public Date getCreated_at() {
 		return created_at;
@@ -83,6 +123,47 @@ public class User  {
 
 	public void setLast_update(Date last_update) {
 		this.last_update = last_update;
+	}
+	
+	
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	public Collection<Authority> getAuths() {
+		// TODO Auto-generated method stub
+		return authorities;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return status != UserStatus.EXPIRED;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return status != UserStatus.LOCKED;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return status != UserStatus.CREDENTIAL_EXPIRED;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return enabled;
 	}
 	
 	
