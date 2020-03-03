@@ -44,6 +44,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -55,4 +59,13 @@
 		</plugins>
 	</build>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.modelmapper</groupId>
+				<artifactId>modelmapper</artifactId>
+				<version>2.3.6</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
