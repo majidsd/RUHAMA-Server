@@ -3,7 +3,9 @@
  */
 package net.ruhama.project.serviceImp;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +49,28 @@ public class UserService implements IUserService {
 
 	@Override
 	public ObjectResponse<UserDto> updateUser(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+		ObjectResponse<UserDto> response = new ObjectResponse<UserDto>();
+		User user = userRepo.getOne(userDto.getId());
+		if (user == null) {
+			response.setResponseCode(400);
+			response.setResponseMessage("User not Exist");
+		} else {
+			User updatedUser = mm.map(userDto, User.class);
+			user.setAuthorities(updatedUser.getAuths());
+			user.setFullName(updatedUser.getFullName());
+			response.setResponseCode(100);
+			response.setResponseMessage("Success");
+		}
+		return response;
 	}
 
 	@Override
 	public ObjectResponse<UserDto> deleteUser(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+		userRepo.delete(mm.map(userDto, User.class));
+		ObjectResponse<UserDto> response = new ObjectResponse<UserDto>();
+		response.setResponseCode(100);
+		response.setResponseMessage("Success");
+		return response;
 	}
 
 	@Override
@@ -66,8 +82,14 @@ public class UserService implements IUserService {
 
 	@Override
 	public ListResponse<UserDto> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserDto> userDtos = new ArrayList<UserDto>();
+		List<User> users = userRepo.findAll();
+		users.forEach(user -> userDtos.add(mm.map(user, UserDto.class)));
+		ListResponse<UserDto> response = new ListResponse<UserDto>();
+		response.setDtos(userDtos);
+		response.setResponseCode(100);
+		response.setResponseMessage("Success");
+		return response;
 	}
 
 }
