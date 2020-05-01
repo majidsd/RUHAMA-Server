@@ -4,7 +4,6 @@
 package net.ruhama.project.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import net.ruhama.project.model.User;
 
