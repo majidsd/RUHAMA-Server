@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import net.ruhama.project.dto.UserDto;
@@ -25,7 +28,7 @@ import net.ruhama.project.service.IUserService;
  *
  */
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepo;
@@ -90,6 +93,12 @@ public class UserService implements IUserService {
 		response.setResponseCode(100);
 		response.setResponseMessage("Success");
 		return response;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return userRepo.findByUsername(username);
 	}
 
 }

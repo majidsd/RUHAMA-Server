@@ -3,6 +3,8 @@
  */
 package net.ruhama.project.response;
 
+import net.ruhama.project.util.ResponseEnum;
+
 /**
  * @author ahmedozy
  *
@@ -26,6 +28,15 @@ public class ObjectResponse<T> extends BaseResponse {
 
 	public ObjectResponse(Integer responseCode, String responseMessage, T dto) {
 		super(responseCode, responseMessage);
+		this.dto = dto;
+	}
+
+	public ObjectResponse(ResponseEnum responseEnum) {
+		super(responseEnum);
+	}
+
+	public ObjectResponse(ResponseEnum responseEnum, T dto) {
+		this(responseEnum);
 		this.dto = dto;
 	}
 

@@ -37,10 +37,13 @@ public class User implements UserDetails {
 	@Column(name = "full_name")
 	private String fullName;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String username;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
+	private Integer phoneNumber;
+	
+	@Column(nullable = true)
 	private String password;
 	
 	@OneToMany
@@ -52,7 +55,7 @@ public class User implements UserDetails {
 	@Column(name="created_at", nullable = false)
 	private Date created_at;
 	
-	@Column(name="last_update", nullable = false)
+	@Column(name="last_update", nullable = true)
 	private Date last_update;
 	
 	@Column
@@ -96,6 +99,14 @@ public class User implements UserDetails {
 	}
 	
 	
+
+	public Integer getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Integer phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 	public void setAuthorities(Collection<Authority> authorities) {
 		this.authorities = authorities;

@@ -13,4 +13,6 @@ import net.ruhama.project.model.Authority;
  */
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
+	Authority findByAuthorityName(String authorityName);
+
 }

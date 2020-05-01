@@ -3,6 +3,8 @@
  */
 package net.ruhama.project.response;
 
+import net.ruhama.project.util.ResponseEnum;
+
 /**
  * @author ahmedozy
  *
@@ -35,6 +37,29 @@ public class BaseResponse {
 		super();
 		this.responseCode = responseCode;
 		this.responseMessage = responseMessage;
+	}
+	
+	public BaseResponse(ResponseEnum responseEnum) {
+		super();
+		switch(responseEnum) {
+		case DUPLICATED_ITEM:
+			this.responseCode = 401;
+			this.responseMessage = "Duplicated Item";
+			break;
+		case ITEM_NOT_FOUND:
+			this.responseCode = 404;
+			this.responseMessage = "Item Not Found";
+			break;
+		case SUCCESS:
+			this.responseCode = 201;
+			this.responseMessage = "Success";
+			break;
+		default:
+			this.responseCode = 500;
+			this.responseMessage = "None";
+			break;
+		
+		}
 	}
 	
 }
