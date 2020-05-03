@@ -54,6 +54,10 @@ public class WalletHistory {
 	private User owner;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="the_case", nullable = true)
+	private Case the_case;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="created_by", nullable = true)
 	private User created_by;
 	
@@ -249,12 +253,27 @@ public class WalletHistory {
 		this.last_update_by = last_update_by;
 	}
 
+	/**
+	 * @return the the_case
+	 */
+	public Case getThe_case() {
+		return the_case;
+	}
+
+	/**
+	 * @param the_case the the_case to set
+	 */
+	public void setThe_case(Case the_case) {
+		this.the_case = the_case;
+	}
+
 	@Override
 	public String toString() {
 		return "WalletHistory [id=" + id + ", amount=" + amount + ", bank=" + bank + ", branch=" + branch
 				+ ", receipt_no=" + receipt_no + ", receipt_imgUrl=" + receipt_imgUrl + ", description=" + description
-				+ ", status=" + status + ", owner=" + owner + ", created_by=" + created_by + ", created_at="
-				+ created_at + ", last_update=" + last_update + ", last_update_by=" + last_update_by + "]";
+				+ ", status=" + status + ", owner=" + owner + ", the_case=" + the_case + ", created_by=" + created_by
+				+ ", created_at=" + created_at + ", last_update=" + last_update + ", last_update_by=" + last_update_by
+				+ "]";
 	}
 
 }

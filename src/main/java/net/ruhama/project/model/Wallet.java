@@ -149,7 +149,9 @@ public class Wallet {
 	
 	@Override
 	public String toString() {
-		return "Wallet [id=" + id + ", current_balance=" + current_balance + ", owner=" + owner + "]";
+		return "Wallet [id=" + id + ", current_balance=" + current_balance + ", owner=" + owner + ", created_at="
+				+ created_at + ", last_update=" + last_update + ", created_by=" + created_by + ", last_update_by="
+				+ last_update_by + "]";
 	}
 
 }
