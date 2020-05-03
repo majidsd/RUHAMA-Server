@@ -39,10 +39,10 @@ public class CaseApiController {
 		return caseService.getCaseById(caseId);
 	}
 	
-	@GetMapping("/agent")
-	public ListResponse<CaseDto> getAgentCases(Authentication authentication){
+	@GetMapping("/agent/{agentId}")
+	public ListResponse<CaseDto> getAgentCases(@PathVariable int agentId){
 		
-		return caseService.getAgentCases(((User)authentication.getPrincipal()).getId());
+		return caseService.getAgentCases(agentId);
 	}
 	
 	@PostMapping("/create")
