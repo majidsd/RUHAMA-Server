@@ -4,7 +4,6 @@
 package net.ruhama.project.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ruhama.project.dto.CaseDto;
-import net.ruhama.project.model.User;
 import net.ruhama.project.response.ListResponse;
 import net.ruhama.project.response.ObjectResponse;
 import net.ruhama.project.service.ICaseService;

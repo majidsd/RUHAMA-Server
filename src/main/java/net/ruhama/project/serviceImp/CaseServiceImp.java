@@ -63,6 +63,7 @@ public class CaseServiceImp implements ICaseService {
 			addedCase.setAgent(agent);
 			addedCase = caseRepo.save(addedCase);
 			caseDto = mapper.map(addedCase, CaseDto.class);
+			response = new ObjectResponse<>(ResponseEnum.SUCCESS);
 			response = new ObjectResponse<CaseDto>(ResponseEnum.SUCCESS, caseDto);
 		} catch (Exception e) {
 			e.printStackTrace();
