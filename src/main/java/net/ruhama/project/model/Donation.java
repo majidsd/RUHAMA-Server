@@ -38,6 +38,10 @@ public class Donation {
 	@JoinColumn(name="donator", nullable = true)
 	private User donator;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="the_case", nullable = true)
+	private Case the_case;
+	
 	@JoinColumn(name="created_at", nullable = false)
 	private Date created_at;
 	
@@ -164,11 +168,25 @@ public class Donation {
 		this.last_update_by = last_update_by;
 	}
 
+	/**
+	 * @return the the_case
+	 */
+	public Case getThe_case() {
+		return the_case;
+	}
+
+	/**
+	 * @param the_case the the_case to set
+	 */
+	public void setThe_case(Case the_case) {
+		this.the_case = the_case;
+	}
+
 	@Override
 	public String toString() {
-		return "Donation [id=" + id + ", amount=" + amount + ", info=" + info + ", donator=" + donator + ", created_at="
-				+ created_at + ", last_update=" + last_update + ", created_by=" + created_by + ", last_update_by="
-				+ last_update_by + "]";
+		return "Donation [id=" + id + ", amount=" + amount + ", info=" + info + ", donator=" + donator + ", the_case="
+				+ the_case + ", created_at=" + created_at + ", last_update=" + last_update + ", created_by="
+				+ created_by + ", last_update_by=" + last_update_by + "]";
 	}
 	
 }

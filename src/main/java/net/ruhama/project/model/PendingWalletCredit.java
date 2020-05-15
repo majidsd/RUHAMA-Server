@@ -20,8 +20,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="Wallet_history")
-public class WalletHistory {
+@Table(name="pending_wallet_credit")
+public class PendingWalletCredit {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +35,23 @@ public class WalletHistory {
 	@JoinColumn(name="wallet", nullable = true)
 	private Wallet wallet;
 	
+	@JoinColumn(name="bank", nullable = true)
+	private String bank;
+	
+	@JoinColumn(name="branch", nullable = true)
+	private String branch;
+	
+	@JoinColumn(name="receipt_no", nullable = true)
+	private String receipt_no;
+	
+	@JoinColumn(name="receipt_imgUrl", nullable = true)
+	private String receipt_imgUrl;
+	
+	@JoinColumn(name="status", nullable = true)
+	private Byte status;
+	
 	@JoinColumn(name="description", nullable = true)
 	private String description;
-	
-	@JoinColumn(name="operation", nullable = true)
-	private String operation;
-	
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="created_by", nullable = true)
@@ -99,6 +110,76 @@ public class WalletHistory {
 	}
 
 	/**
+	 * @return the bank
+	 */
+	public String getBank() {
+		return bank;
+	}
+
+	/**
+	 * @param bank the bank to set
+	 */
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	/**
+	 * @return the branch
+	 */
+	public String getBranch() {
+		return branch;
+	}
+
+	/**
+	 * @param branch the branch to set
+	 */
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	/**
+	 * @return the receipt_no
+	 */
+	public String getReceipt_no() {
+		return receipt_no;
+	}
+
+	/**
+	 * @param receipt_no the receipt_no to set
+	 */
+	public void setReceipt_no(String receipt_no) {
+		this.receipt_no = receipt_no;
+	}
+
+	/**
+	 * @return the receipt_imgUrl
+	 */
+	public String getReceipt_imgUrl() {
+		return receipt_imgUrl;
+	}
+
+	/**
+	 * @param receipt_imgUrl the receipt_imgUrl to set
+	 */
+	public void setReceipt_imgUrl(String receipt_imgUrl) {
+		this.receipt_imgUrl = receipt_imgUrl;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Byte getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+	/**
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -110,20 +191,6 @@ public class WalletHistory {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	/**
-	 * @return the operation
-	 */
-	public String getOperation() {
-		return operation;
-	}
-
-	/**
-	 * @param operation the operation to set
-	 */
-	public void setOperation(String operation) {
-		this.operation = operation;
 	}
 
 	/**
@@ -184,9 +251,11 @@ public class WalletHistory {
 
 	@Override
 	public String toString() {
-		return "WalletHistory [id=" + id + ", amount=" + amount + ", wallet=" + wallet + ", description=" + description
-				+ ", operation=" + operation + ", created_by=" + created_by + ", last_update_by=" + last_update_by
-				+ ", created_at=" + created_at + ", last_update=" + last_update + "]";
+		return "PendingWalletCredit [id=" + id + ", amount=" + amount + ", wallet=" + wallet + ", bank=" + bank
+				+ ", branch=" + branch + ", receipt_no=" + receipt_no + ", receipt_imgUrl=" + receipt_imgUrl
+				+ ", status=" + status + ", description=" + description + ", created_by=" + created_by
+				+ ", last_update_by=" + last_update_by + ", created_at=" + created_at + ", last_update=" + last_update
+				+ "]";
 	}
 
 }
