@@ -26,6 +26,7 @@ public class UserServiceUnitTest {
 	@Test
 	public void addUserTest() {
 		UserDto userDto = new UserDto("Ahmed Osman Wahbi", "ahmedozy", "password", "password",  Arrays.asList(new AuthorityDto[] {new AuthorityDto(null,"admin","admin user")}));
+		userDto.setPhoneNumber(116300001);
 		ObjectResponse<UserDto> response = userService.addUser(userDto);
 		System.out.println(response);
 	}

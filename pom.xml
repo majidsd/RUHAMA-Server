@@ -72,4 +72,9 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<packaging>war</packaging>
+	<scm>
+		<developerConnection>ACER</developerConnection>
+		<url>https://github.com/majidsd/RUHAMA-Server.git</url>
+	</scm>
 </project>

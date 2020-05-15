@@ -23,6 +23,12 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class Category {
 	
+	public Category() {
+		super();
+		// TODO Auto-generated constructor stub
+		this.created_at = new Date();
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
