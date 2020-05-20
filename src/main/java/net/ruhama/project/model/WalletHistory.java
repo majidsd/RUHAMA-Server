@@ -39,8 +39,7 @@ public class WalletHistory {
 	private String description;
 	
 	@JoinColumn(name="operation", nullable = true)
-	private String operation;
-	
+	private Byte operation;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="created_by", nullable = true)
@@ -115,14 +114,14 @@ public class WalletHistory {
 	/**
 	 * @return the operation
 	 */
-	public String getOperation() {
+	public Byte getOperation() {
 		return operation;
 	}
 
 	/**
 	 * @param operation the operation to set
 	 */
-	public void setOperation(String operation) {
+	public void setOperation(Byte operation) {
 		this.operation = operation;
 	}
 
