@@ -98,18 +98,23 @@ public class WalletServiceImp implements IWalletService {
 		WalletHistoryDto walletHistoryDto;
 		
 		if(wallet != null) {
-			walletHistoryDto = new WalletHistoryDto();
-			walletHistoryDto.setOperation(WalletOperations.CREDIT.getValue());
-			walletHistoryDto.setAmount(walletDto.getAmount());
-			walletHistoryDto.setCreated_by_id(walletDto.getOwner_id());
-			walletHistoryDto.setWallet_id(wallet.getId());
-			Double newBalance = wallet.getCurrent_balance() + walletDto.getAmount();
-			wallet.setCurrent_balance(newBalance);
-			wallet.setLast_update(new Date());
-			Wallet updatedWallet = walletRepository.save(wallet);
-			walletHistoryDto.setDescrtption("Credit " + walletDto.getAmount() + " And new balance is "+updatedWallet.getCurrent_balance());
-			walletHistoryService.addWalletHistory(walletHistoryDto);
-			response = new ObjectResponse<Wallet>(ResponseEnum.SUCCESS, updatedWallet);
+			if(walletDto.getAmount() < 0) {
+				walletHistoryDto = new WalletHistoryDto();
+				walletHistoryDto.setOperation(WalletOperations.CREDIT.getValue());
+				walletHistoryDto.setAmount(walletDto.getAmount());
+				walletHistoryDto.setCreated_by_id(walletDto.getOwner_id());
+				walletHistoryDto.setWallet_id(wallet.getId());
+				Double newBalance = wallet.getCurrent_balance() + walletDto.getAmount();
+				wallet.setCurrent_balance(newBalance);
+				wallet.setLast_update(new Date());
+				Wallet updatedWallet = walletRepository.save(wallet);
+				walletHistoryDto.setDescrtption("Credit " + walletDto.getAmount() + " And new balance is "+updatedWallet.getCurrent_balance());
+				walletHistoryService.addWalletHistory(walletHistoryDto);
+				response = new ObjectResponse<Wallet>(ResponseEnum.SUCCESS, updatedWallet);
+			} else {
+				response = new ObjectResponse<Wallet>(ResponseEnum.NEGATIVE_AMOUNT, null);
+			}
+			
 		}else {
 			response = new ObjectResponse<Wallet>(ResponseEnum.ITEM_NOT_FOUND, null);
 		}
@@ -123,23 +128,26 @@ public class WalletServiceImp implements IWalletService {
 		WalletHistoryDto walletHistoryDto;
 		
 		if(wallet != null) {
-			walletHistoryDto = new WalletHistoryDto();
-			walletHistoryDto.setOperation(WalletOperations.DEBIT.getValue());
-			walletHistoryDto.setAmount(walletDto.getAmount());
-			walletHistoryDto.setCreated_by_id(walletDto.getOwner_id());
-			walletHistoryDto.setWallet_id(wallet.getId());
-			Double newBalance = wallet.getCurrent_balance() - walletDto.getAmount();
-			if(newBalance >= 0) {
-				wallet.setCurrent_balance(newBalance);
-				wallet.setLast_update(new Date());
-				Wallet updatedWallet = walletRepository.save(wallet);
-				walletHistoryDto.setDescrtption("Debit " + walletDto.getAmount() + " And new balance is "+updatedWallet.getCurrent_balance());
-				walletHistoryService.addWalletHistory(walletHistoryDto);
-				response = new ObjectResponse<Wallet>(ResponseEnum.SUCCESS, updatedWallet);
+			if(walletDto.getAmount() < 0) {
+				walletHistoryDto = new WalletHistoryDto();
+				walletHistoryDto.setOperation(WalletOperations.DEBIT.getValue());
+				walletHistoryDto.setAmount(walletDto.getAmount());
+				walletHistoryDto.setCreated_by_id(walletDto.getOwner_id());
+				walletHistoryDto.setWallet_id(wallet.getId());
+				Double newBalance = wallet.getCurrent_balance() - walletDto.getAmount();
+				if(newBalance >= 0) {
+					wallet.setCurrent_balance(newBalance);
+					wallet.setLast_update(new Date());
+					Wallet updatedWallet = walletRepository.save(wallet);
+					walletHistoryDto.setDescrtption("Debit " + walletDto.getAmount() + " And new balance is "+updatedWallet.getCurrent_balance());
+					walletHistoryService.addWalletHistory(walletHistoryDto);
+					response = new ObjectResponse<Wallet>(ResponseEnum.SUCCESS, updatedWallet);
+				} else {
+					response = new ObjectResponse<Wallet>(ResponseEnum.INSUFFICIENT, wallet);
+				}
 			} else {
-				response = new ObjectResponse<Wallet>(ResponseEnum.INSUFFICIENT, wallet);
+				response = new ObjectResponse<Wallet>(ResponseEnum.NEGATIVE_AMOUNT, null);
 			}
-			
 		}else {
 			response = new ObjectResponse<Wallet>(ResponseEnum.ITEM_NOT_FOUND, null);
 		}
