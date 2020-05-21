@@ -3,10 +3,11 @@
  */
 package net.ruhama.project.service;
 
-import java.util.Date;
-import java.util.List;
 
+import net.ruhama.project.dto.WalletHistoryDto;
 import net.ruhama.project.model.WalletHistory;
+import net.ruhama.project.response.ListResponse;
+import net.ruhama.project.response.ObjectResponse;
 
 /**
  * @author MaJiD
@@ -14,16 +15,14 @@ import net.ruhama.project.model.WalletHistory;
  */
 public interface IWalletHistoryService {
 	
-	public WalletHistory addWalletHistory();
+	public ObjectResponse<WalletHistory> addWalletHistory(WalletHistoryDto walletHistoryDto);
 	
-	public WalletHistory updateWalletHistory(Integer walletHistory_id, Byte status);
+	public ListResponse<WalletHistory> getOldCredit(WalletHistoryDto walletHistoryDto);
 	
-	public List<WalletHistory> getOldCredit(Integer owner_id);
+	public ListResponse<WalletHistory> getOldCreditPerPeriod(WalletHistoryDto walletHistoryDto);
 	
-	public List<WalletHistory> getOldCreditPerPeriod(Integer owner_id, Date start_date, Date end_date);
+	public ListResponse<WalletHistory> getOldDebit(WalletHistoryDto walletHistoryDto);
 	
-	public List<WalletHistory> getOldDebit(Integer owner_id);
-	
-	public List<WalletHistory> getOldDebitPerPeriod(Integer owner_id, Date start_date, Date end_date);
+	public ListResponse<WalletHistory> getOldDebitPerPeriod(WalletHistoryDto walletHistoryDto);
 	
 }
