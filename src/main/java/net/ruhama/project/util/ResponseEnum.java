@@ -11,7 +11,8 @@ public enum ResponseEnum {
 
 	SUCCESS(201,"Successful"),
 	ITEM_NOT_FOUND(404, "Item not found"),
-	DUPLICATED_ITEM(440, "Duplicated item");
+	DUPLICATED_ITEM(440, "Duplicated item"),
+	TRY_AGAIN(474, "Try again");
 	
 	private Integer responseCode;
 	private String responseMessage;
