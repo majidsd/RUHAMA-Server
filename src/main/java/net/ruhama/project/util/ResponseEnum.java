@@ -13,7 +13,8 @@ public enum ResponseEnum {
 	INSUFFICIENT(203, "Insufficient amount"),
 	ITEM_NOT_FOUND(404, "Item not found"),
 	DUPLICATED_ITEM(440, "Duplicated item"),
-	TRY_AGAIN(474, "Try again");
+	TRY_AGAIN(474, "Try again"),
+	NEGATIVE_AMOUNT(484,"Negative amount");
 	
 	private Integer responseCode;
 	private String responseMessage;
