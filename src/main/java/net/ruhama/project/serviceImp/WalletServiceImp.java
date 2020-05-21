@@ -98,7 +98,7 @@ public class WalletServiceImp implements IWalletService {
 		WalletHistoryDto walletHistoryDto;
 		
 		if(wallet != null) {
-			if(walletDto.getAmount() < 0) {
+			if(walletDto.getAmount() > 0) {
 				walletHistoryDto = new WalletHistoryDto();
 				walletHistoryDto.setOperation(WalletOperations.CREDIT.getValue());
 				walletHistoryDto.setAmount(walletDto.getAmount());
@@ -128,7 +128,7 @@ public class WalletServiceImp implements IWalletService {
 		WalletHistoryDto walletHistoryDto;
 		
 		if(wallet != null) {
-			if(walletDto.getAmount() < 0) {
+			if(walletDto.getAmount() > 0) {
 				walletHistoryDto = new WalletHistoryDto();
 				walletHistoryDto.setOperation(WalletOperations.DEBIT.getValue());
 				walletHistoryDto.setAmount(walletDto.getAmount());
