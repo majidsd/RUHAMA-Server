@@ -3,8 +3,10 @@
  */
 package net.ruhama.project.service;
 
-import net.ruhama.project.model.User;
+import net.ruhama.project.dto.WalletDto;
 import net.ruhama.project.model.Wallet;
+import net.ruhama.project.response.ListResponse;
+import net.ruhama.project.response.ObjectResponse;
 
 /**
  * @author MaJiD
@@ -12,12 +14,16 @@ import net.ruhama.project.model.Wallet;
  */
 public interface IWalletService {
 	
-	public Wallet addWallet(Integer owner_id, Double current_balance, Integer createdByUser_id);
+	public ObjectResponse<Wallet> addWallet(WalletDto walletDto);
 	
-	public Double getBalance(Integer owner_id);
+	public ObjectResponse<Wallet> getWallet(Integer id);
 	
-	public Boolean credit(User owner, Double amount);
+	public ObjectResponse<Double> getBalance(WalletDto walletDto);
 	
-	public Boolean debit(User owner, Double amount);
+	public ObjectResponse<Wallet> credit(WalletDto walletDto);
+	
+	public ObjectResponse<Wallet> debit(WalletDto walletDto);
+	
+	public ListResponse<Wallet> getAllWallets();
 
 }
