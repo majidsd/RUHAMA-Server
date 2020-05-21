@@ -32,7 +32,7 @@ public class Wallet {
 	private Double current_balance;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="owner", nullable = true)
+	@JoinColumn(name="owner", nullable = true, unique = true)
 	private User owner;
 	
 	@JoinColumn(name="created_at", nullable = false)
