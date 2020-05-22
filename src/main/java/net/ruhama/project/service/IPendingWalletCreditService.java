@@ -16,7 +16,9 @@ public interface IPendingWalletCreditService {
 	
 	public ObjectResponse<PendingWalletCredit> addPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
-	public ObjectResponse<PendingWalletCredit> updatePendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
+	public ObjectResponse<PendingWalletCredit> approvePendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
+	
+	public ObjectResponse<PendingWalletCredit> rejectPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
 	public ObjectResponse<PendingWalletCredit> getPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
