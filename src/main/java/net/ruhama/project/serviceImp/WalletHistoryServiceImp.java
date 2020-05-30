@@ -129,4 +129,36 @@ public class WalletHistoryServiceImp implements IWalletHistoryService  {
 		return response;
 	}
 
+	@Override
+	public ListResponse<WalletHistory> getOldTransactions(WalletHistoryDto walletHistoryDto) {
+		ListResponse<WalletHistory> response;
+		try {
+			Wallet wallet = walletService.getWallet(walletHistoryDto.getWallet_id()).getDto();
+			if(wallet != null) {
+				response = new ListResponse<WalletHistory>(ResponseEnum.SUCCESS, walletHistoryRepository.getWalletTransactions(wallet));
+			} else {
+				response = new ListResponse<WalletHistory>(ResponseEnum.ITEM_NOT_FOUND, null);
+			}
+		} catch (Exception e) {
+			response = new ListResponse<WalletHistory>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
+
+	@Override
+	public ListResponse<WalletHistory> getOldTransactionsPerPeriod(WalletHistoryDto walletHistoryDto) {
+		ListResponse<WalletHistory> response;
+		try {
+			Wallet wallet = walletService.getWallet(walletHistoryDto.getWallet_id()).getDto();
+			if(wallet != null) {
+				response = new ListResponse<WalletHistory>(ResponseEnum.SUCCESS, walletHistoryRepository.getWalletTransactionsPerPeriod(wallet, walletHistoryDto.getFrom_date(), walletHistoryDto.getTo_date()));
+			} else {
+				response = new ListResponse<WalletHistory>(ResponseEnum.ITEM_NOT_FOUND, null);
+			}
+		} catch (Exception e) {
+			response = new ListResponse<WalletHistory>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
+
 }
