@@ -25,7 +25,7 @@ public interface IWalletHistoryService {
 	
 	public ListResponse<WalletHistory> getOldDebitPerPeriod(WalletHistoryDto walletHistoryDto);
 	
-public ListResponse<WalletHistory> getOldTransactions(WalletHistoryDto walletHistoryDto);
+	public ListResponse<WalletHistory> getOldTransactions(WalletHistoryDto walletHistoryDto);
 	
 	public ListResponse<WalletHistory> getOldTransactionsPerPeriod(WalletHistoryDto walletHistoryDto);
 	
