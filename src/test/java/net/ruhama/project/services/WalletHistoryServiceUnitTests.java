@@ -101,5 +101,35 @@ public class WalletHistoryServiceUnitTests {
 		ListResponse<WalletHistory> response = walletHistoryService.getOldCreditPerPeriod(walletHistoryDto);
 		System.out.println(response.getDtos());
 	}
+	
+	@Test
+	public void getWalletHistoryTransactionsUnitTest() throws ParseException {
+		walletHistoryDto = new WalletHistoryDto();
+		walletHistoryDto.setAmount(12000.0);
+		walletHistoryDto.setCreated_by_id(1);
+		walletHistoryDto.setDescrtption("This for out child.");
+		walletHistoryDto.setWallet_id(1);
+		walletHistoryDto.setOperation(WalletOperations.DEBIT.getValue());
+		walletHistoryDto.setFrom_date(new SimpleDateFormat("yyyy-MM-dd").parse("2020-5-14"));
+		walletHistoryDto.setTo_date(new SimpleDateFormat("yyyy-MM-dd").parse("2020-5-21"));
+		System.out.println(walletHistoryDto);
+		ListResponse<WalletHistory> response = walletHistoryService.getOldTransactions(walletHistoryDto);
+		System.out.println(response.getDtos());
+	}
+	
+	@Test
+	public void getWalletHistoryForTransactionsPerPeriodUnitTest() throws ParseException {
+		walletHistoryDto = new WalletHistoryDto();
+		walletHistoryDto.setAmount(12000.0);
+		walletHistoryDto.setCreated_by_id(1);
+		walletHistoryDto.setDescrtption("This for out child.");
+		walletHistoryDto.setWallet_id(1);
+		walletHistoryDto.setOperation(WalletOperations.CREDIT.getValue());
+		walletHistoryDto.setFrom_date(new SimpleDateFormat("yyyy-MM-dd").parse("2020-5-14"));
+		walletHistoryDto.setTo_date(new SimpleDateFormat("yyyy-MM-dd").parse("2020-5-21"));
+		System.out.println(walletHistoryDto);
+		ListResponse<WalletHistory> response = walletHistoryService.getOldTransactionsPerPeriod(walletHistoryDto);
+		System.out.println(response.getDtos());
+	}
 
 }
