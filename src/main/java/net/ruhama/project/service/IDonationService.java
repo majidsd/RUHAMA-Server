@@ -14,15 +14,15 @@ import net.ruhama.project.response.ObjectResponse;
  */
 public interface IDonationService {
 	
-	public ObjectResponse<Donation> donate(DonationDto donationDto);
+	public ObjectResponse<DonationDto> donate(DonationDto donationDto);
 	
 	public ObjectResponse<Donation> transferDonation(DonationDto donationDto);
 	
-	public ListResponse<Donation> getCaseDonations(DonationDto donationDto);
+	public ListResponse<DonationDto> getCaseDonations(DonationDto donationDto);
 	
 	public ListResponse<Donation> getCaseDonationsPerPeriod(DonationDto donationDto);
 	
-	public ListResponse<Donation> getUserDonations(DonationDto donationDto);
+	public ListResponse<DonationDto> getUserDonations(DonationDto donationDto);
 	
 	public ListResponse<Donation> getUserDonationsPerPeriod(DonationDto donationDto);
 	

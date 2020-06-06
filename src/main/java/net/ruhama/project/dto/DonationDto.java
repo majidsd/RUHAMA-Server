@@ -19,6 +19,7 @@ public class DonationDto {
 	private Integer new_case_id;
 	private String info;
 	private Integer created_by_id;
+	private Date donation_date;
 	/**
 	 * @return the id
 	 */
@@ -127,10 +128,17 @@ public class DonationDto {
 	public void setCreated_by_id(Integer created_by_id) {
 		this.created_by_id = created_by_id;
 	}
+	
+	public Date getDonation_date() {
+		return donation_date;
+	}
+	public void setDonation_date(Date donation_date) {
+		this.donation_date = donation_date;
+	}
 	@Override
 	public String toString() {
-		return "DonationDto [donator_id=" + donator_id + ", case_id=" + case_id + ", amount=" + amount + ", start_date="
-				+ start_date + ", end_date=" + end_date + ", new_case_id=" + new_case_id + ", info=" + info
-				+ ", created_by_id=" + created_by_id + "]";
+		return "DonationDto [id=" + id + ", donator_id=" + donator_id + ", case_id=" + case_id + ", amount=" + amount
+				+ ", start_date=" + start_date + ", end_date=" + end_date + ", new_case_id=" + new_case_id + ", info="
+				+ info + ", created_by_id=" + created_by_id + ", donation_date=" + donation_date + "]";
 	}
 }

@@ -3,8 +3,11 @@
  */
 package net.ruhama.project.serviceImp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,10 +44,13 @@ public class DonationServiceImp implements IDonationService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
-	public ObjectResponse<Donation> donate(DonationDto donationDto) {
-		ObjectResponse<Donation> response;
+	public ObjectResponse<DonationDto> donate(DonationDto donationDto) {
+		ObjectResponse<DonationDto> response;
 		Case the_case;
 		Wallet wallet;
 		User doner;
@@ -53,7 +59,7 @@ public class DonationServiceImp implements IDonationService {
 		try {
 			if(donationDto.getAmount() > 0) {
 				doner = userRepository.getOne(donationDto.getDonator_id());
-				wallet = walletService.getWallet(doner.getId()).getDto();
+				wallet = doner.getWallet();
 				the_case = caseRepository.getOne(donationDto.getCase_id());
 				creater = userRepository.getOne(donationDto.getCreated_by_id());
 				
@@ -83,23 +89,24 @@ public class DonationServiceImp implements IDonationService {
 						if(walletResponse.getResponseCode() == ResponseEnum.SUCCESS.getResponseCode()) {
 							Donation savedDonation = donationRepository.save(donation);
 							caseRepository.save(the_case);
-							response = new ObjectResponse<Donation>(ResponseEnum.SUCCESS, savedDonation);
+							DonationDto responseDonation = mapper.map(savedDonation, DonationDto.class);
+							response = new ObjectResponse<DonationDto>(ResponseEnum.SUCCESS, responseDonation);
 						} else {
-							response = new ObjectResponse<Donation>(ResponseEnum.TRY_AGAIN, null);
+							response = new ObjectResponse<DonationDto>(ResponseEnum.TRY_AGAIN, null);
 						}
 						
 					} else {
-						response = new ObjectResponse<Donation>(ResponseEnum.INSUFFICIENT, null);
+						response = new ObjectResponse<DonationDto>(ResponseEnum.INSUFFICIENT, null);
 					}
 				} else {
-					response = new ObjectResponse<Donation>(ResponseEnum.ITEM_NOT_FOUND, null);
+					response = new ObjectResponse<DonationDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 				}
 			} else {
-				response = new ObjectResponse<Donation>(ResponseEnum.NEGATIVE_AMOUNT, null);
+				response = new ObjectResponse<DonationDto>(ResponseEnum.NEGATIVE_AMOUNT, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<Donation>(ResponseEnum.TRY_AGAIN, null);
+			response = new ObjectResponse<DonationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
@@ -154,20 +161,37 @@ public class DonationServiceImp implements IDonationService {
 	}
 
 	@Override
-	public ListResponse<Donation> getCaseDonations(DonationDto donationDto) {
-		ListResponse<Donation> response;
+	public ListResponse<DonationDto> getCaseDonations(DonationDto donationDto) {
+		ListResponse<DonationDto> response;
+		List<DonationDto> donationDtos = new ArrayList<DonationDto>();
+		List<Donation> donations;
 		try {
 			Case the_case = caseRepository.getOne(donationDto.getCase_id());
 			if(the_case != null) {
-				response = new ListResponse<Donation>(ResponseEnum.SUCCESS, donationRepository.getCaseDonations(the_case));
+				donations = donationRepository.getCaseDonations(the_case);
+				donations.forEach(d -> donationDtos.add(toDto(d)));
+				response = new ListResponse<DonationDto>(ResponseEnum.SUCCESS, donationDtos);
 			} else {
-				response = new ListResponse<Donation>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ListResponse<DonationDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ListResponse<Donation>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<DonationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
+	}
+
+	private DonationDto toDto(Donation d) {
+		// TODO Auto-generated method stub
+		DonationDto ddt = new DonationDto();
+		ddt.setAmount(d.getAmount());
+		ddt.setCase_id(d.getThe_case()==null?null:d.getThe_case().getId());
+		ddt.setCreated_by_id(d.getCreated_by()==null?null:d.getCreated_by().getId());
+		ddt.setDonator_id(d.getDonator()==null?null:d.getDonator().getId());
+		ddt.setId(d.getId());
+		ddt.setInfo(d.getInfo());
+		ddt.setDonation_date(d.getCreated_at());
+		return ddt;
 	}
 
 	@Override
@@ -188,18 +212,22 @@ public class DonationServiceImp implements IDonationService {
 	}
 
 	@Override
-	public ListResponse<Donation> getUserDonations(DonationDto donationDto) {
-		ListResponse<Donation> response;
+	public ListResponse<DonationDto> getUserDonations(DonationDto donationDto) {
+		ListResponse<DonationDto> response;
+		List<DonationDto> donationDtos = new ArrayList<DonationDto>();
+		List<Donation> donations;
 		try {
 			User donor = userRepository.getOne(donationDto.getDonator_id());
 			if(donor != null) {
-				response = new ListResponse<Donation>(ResponseEnum.SUCCESS, donationRepository.getUserDonations(donor));
+				donations = donationRepository.getUserDonations(donor);
+				donations.forEach(d -> donationDtos.add(toDto(d)));
+				response = new ListResponse<DonationDto>(ResponseEnum.SUCCESS, donationDtos );
 			} else {
-				response = new ListResponse<Donation>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ListResponse<DonationDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ListResponse<Donation>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<DonationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}

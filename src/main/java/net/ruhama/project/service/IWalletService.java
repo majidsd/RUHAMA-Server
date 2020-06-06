@@ -20,7 +20,7 @@ public interface IWalletService {
 	
 	public ObjectResponse<Double> getBalance(WalletDto walletDto);
 	
-	public ObjectResponse<Wallet> credit(WalletDto walletDto);
+	public ObjectResponse<WalletDto> credit(WalletDto walletDto);
 	
 	public ObjectResponse<Wallet> debit(WalletDto walletDto);
 	

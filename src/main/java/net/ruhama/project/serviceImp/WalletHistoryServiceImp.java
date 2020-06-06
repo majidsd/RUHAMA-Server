@@ -3,7 +3,10 @@
  */
 package net.ruhama.project.serviceImp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -130,19 +133,33 @@ public class WalletHistoryServiceImp implements IWalletHistoryService  {
 	}
 
 	@Override
-	public ListResponse<WalletHistory> getOldTransactions(WalletHistoryDto walletHistoryDto) {
-		ListResponse<WalletHistory> response;
+	public ListResponse<WalletHistoryDto> getOldTransactions(WalletHistoryDto walletHistoryDto) {
+		ListResponse<WalletHistoryDto> response;
+		List<WalletHistoryDto> walletHistoryDtos = new ArrayList<WalletHistoryDto>();
 		try {
 			Wallet wallet = walletService.getWallet(walletHistoryDto.getWallet_id()).getDto();
 			if(wallet != null) {
-				response = new ListResponse<WalletHistory>(ResponseEnum.SUCCESS, walletHistoryRepository.getWalletTransactions(wallet));
+				List<WalletHistory> walletHistoryList = walletHistoryRepository.getWalletTransactions(wallet);
+				walletHistoryList.forEach(wh -> walletHistoryDtos.add(toDto(wh)));
+				response = new ListResponse<WalletHistoryDto>(ResponseEnum.SUCCESS, walletHistoryDtos);
 			} else {
-				response = new ListResponse<WalletHistory>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ListResponse<WalletHistoryDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
 		} catch (Exception e) {
-			response = new ListResponse<WalletHistory>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<WalletHistoryDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
+	}
+
+	private WalletHistoryDto toDto(WalletHistory wh) {
+		// TODO Auto-generated method stub
+		WalletHistoryDto whd = new WalletHistoryDto();
+		whd.setAmount(wh.getAmount());
+		whd.setCreated_by_id(wh.getCreated_by()==null?null:wh.getCreated_by().getId());
+		whd.setDescrtption(wh.getDescription());
+		whd.setWallet_id(wh.getWallet().getId());
+		whd.setOperation(wh.getOperation());
+		return whd;
 	}
 
 	@Override

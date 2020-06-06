@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -40,11 +41,14 @@ public class User implements UserDetails {
 	@Column(nullable = true)
 	private String username;
 	
-	@Column(nullable = true)
+	@Column(name = "phone_number", nullable = true)
 	private Integer phoneNumber;
 	
 	@Column(nullable = true)
 	private String password;
+	
+	@ManyToOne
+	private Wallet wallet;
 	
 	@OneToMany
 	private Collection<Authority> authorities;
@@ -106,6 +110,15 @@ public class User implements UserDetails {
 
 	public void setPhoneNumber(Integer phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
 	}
 
 	public void setAuthorities(Collection<Authority> authorities) {

@@ -20,6 +20,8 @@ public class Otp {
 	@Column(name = "phone_number", unique = true, nullable = false)
 	@Max(value = 999999999)
 	private Integer phoneNumber;
+	@Column(name = "is_agent")
+	private boolean agent;
 	@Column(name = "status")
 	private OtpStatus status;
 	public Integer getId() {
@@ -46,9 +48,17 @@ public class Otp {
 	public void setStatus(OtpStatus status) {
 		this.status = status;
 	}
+	
+	public boolean isAgent() {
+		return agent;
+	}
+	public void setAgent(boolean agent) {
+		this.agent = agent;
+	}
 	@Override
 	public String toString() {
-		return "Otp [id=" + id + ", otp=" + otp + ", phoneNumber=" + phoneNumber + ", status=" + status + "]";
+		return "Otp [id=" + id + ", otp=" + otp + ", phoneNumber=" + phoneNumber + ", agent=" + agent + ", status="
+				+ status + "]";
 	}
 	
 	

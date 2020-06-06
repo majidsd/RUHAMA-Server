@@ -4,6 +4,7 @@
 package net.ruhama.project.serviceImp;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 
 import org.modelmapper.ModelMapper;
@@ -14,12 +15,15 @@ import net.ruhama.project.dto.OtpDto;
 import net.ruhama.project.dto.UserProfileDto;
 import net.ruhama.project.model.Otp;
 import net.ruhama.project.model.User;
+import net.ruhama.project.model.Wallet;
 import net.ruhama.project.repo.AuthorityRepository;
 import net.ruhama.project.repo.OtpRepository;
 import net.ruhama.project.repo.UserRepository;
+import net.ruhama.project.repo.WalletRepository;
 import net.ruhama.project.response.ObjectResponse;
 import net.ruhama.project.service.IUserAuthentication;
 import net.ruhama.project.util.ResponseEnum;
+import net.ruhama.project.util.UserStatus;
 
 /**
  * @author ahmedozy
@@ -37,6 +41,8 @@ public class UserAuthentication implements IUserAuthentication {
 	@Autowired
 	private AuthorityRepository authRepo;
 	
+	@Autowired
+	private WalletRepository walletRepo;
 	@Autowired
 	private ModelMapper mapper;
 	
@@ -72,19 +78,40 @@ public class UserAuthentication implements IUserAuthentication {
 		Otp otp = otpRepo.findByOtp(Integer.valueOf(otpDto.getOtp()));
 		if(null != otp && otpDto.getPhoneNumber().equals(otp.getPhoneNumber().toString())) {
 			User user = userRepo.findByPhoneNumber(otp.getPhoneNumber());
-			if(user == null) {
-				user = new User();
-				user.setPhoneNumber(otp.getPhoneNumber());
-				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("ROLE_USER")));
-				user = userRepo.save(user);
-			}
+			user = createUserIfNotExist(otp, user);
 			UserProfileDto userProfileDto = mapper.map(user, UserProfileDto.class);
+			userProfileDto.setId(user.getId());
+			userProfileDto.setStatus(user.getStatus());
 			response = new ObjectResponse<UserProfileDto>(ResponseEnum.SUCCESS, userProfileDto);
 			otpRepo.delete(otp);
 		} else {
 			response = new ObjectResponse<>(ResponseEnum.ITEM_NOT_FOUND);
 		}
 		return response;
+	}
+
+
+	private User createUserIfNotExist(Otp otp, User user) {
+		Wallet wallet;
+		if(user == null) {
+			user = new User();
+			user.setPhoneNumber(otp.getPhoneNumber());
+			user.setStatus(UserStatus.ACTIVE);
+			user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("ROLE_USER")));
+			if(otp.isAgent()) {
+				wallet = new Wallet();
+				wallet.setCreated_at(new Date());
+				wallet.setCurrent_balance(0.0);
+				wallet.setLast_update(new Date());
+				Wallet savedWallet = walletRepo.save(wallet);
+				user.setWallet(savedWallet);
+			} else {
+				wallet = walletRepo.getOne(1);
+				user.setWallet(wallet);
+			}
+			user = userRepo.save(user);
+		}
+		return user;
 	}
 	
 	private Integer generateOtp() {

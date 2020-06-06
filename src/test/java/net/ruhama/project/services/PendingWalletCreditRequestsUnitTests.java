@@ -39,44 +39,42 @@ public class PendingWalletCreditRequestsUnitTests {
 		System.out.println(response.getResponseMessage() + " - " + response.getDto());
 	}
 	
-	@Test
-	public void getPendingWalletCreditUnitTest() {
-		PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
-		pendingWalletCreditDto.setId(1);
-		ObjectResponse<PendingWalletCredit> response = pendingWalletCreditService.getPendingWalletCredit(pendingWalletCreditDto);
-		System.out.println(response.getResponseMessage() + " - " + response.getDto());
-	}
-	
-	@Test
-	public void getWalletPendingWalletCreditUnitTest() {
-		PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
-		pendingWalletCreditDto.setWallet_id(2);
-		ListResponse<PendingWalletCredit> response = pendingWalletCreditService.getUserPendingWalletCredits(pendingWalletCreditDto);
-		System.out.println(response.getResponseMessage() + " - " + response.getDtos());
-	}
-	
-	@Test
-	public void getWalletsPendingWalletCreditUnitTest() {
-		ListResponse<PendingWalletCredit> response = pendingWalletCreditService.getAllPendingWalletCredits();
-		System.out.println(response.getResponseMessage() + " - " + response.getDtos());
-	}
-	
-	@Test
-	public void approvePendingWalletCreditUnitTest() {
-		PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
-		pendingWalletCreditDto.setCreated_by_id(1);
-		pendingWalletCreditDto.setId(1);
-		ObjectResponse<PendingWalletCredit> response = pendingWalletCreditService.approvePendingWalletCredit(pendingWalletCreditDto);
-		System.out.println(response.getResponseMessage() + " - " + response.getDto());
-	}
-	
-	@Test
-	public void rejectPendingWalletCreditUnitTest() {
-		PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
-		pendingWalletCreditDto.setCreated_by_id(1);
-		pendingWalletCreditDto.setId(2);
-		ObjectResponse<PendingWalletCredit> response = pendingWalletCreditService.rejectPendingWalletCredit(pendingWalletCreditDto);
-		System.out.println(response.getResponseMessage() + " - " + response.getDto());
-	}
-	
+	/*
+	 * @Test public void getPendingWalletCreditUnitTest() { PendingWalletCreditDto
+	 * pendingWalletCreditDto = new PendingWalletCreditDto();
+	 * pendingWalletCreditDto.setId(1); ObjectResponse<PendingWalletCredit> response
+	 * = pendingWalletCreditService.getPendingWalletCredit(pendingWalletCreditDto);
+	 * System.out.println(response.getResponseMessage() + " - " +
+	 * response.getDto()); }
+	 * 
+	 * @Test public void getWalletPendingWalletCreditUnitTest() {
+	 * PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
+	 * pendingWalletCreditDto.setWallet_id(2); ListResponse<PendingWalletCredit>
+	 * response =
+	 * pendingWalletCreditService.getUserPendingWalletCredits(pendingWalletCreditDto
+	 * ); System.out.println(response.getResponseMessage() + " - " +
+	 * response.getDtos()); }
+	 * 
+	 * @Test public void getWalletsPendingWalletCreditUnitTest() {
+	 * ListResponse<PendingWalletCredit> response =
+	 * pendingWalletCreditService.getAllPendingWalletCredits();
+	 * System.out.println(response.getResponseMessage() + " - " +
+	 * response.getDtos()); }
+	 * 
+	 * @Test public void approvePendingWalletCreditUnitTest() {
+	 * PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
+	 * pendingWalletCreditDto.setCreated_by_id(1); pendingWalletCreditDto.setId(1);
+	 * ObjectResponse<PendingWalletCredit> response =
+	 * pendingWalletCreditService.approvePendingWalletCredit(pendingWalletCreditDto)
+	 * ; System.out.println(response.getResponseMessage() + " - " +
+	 * response.getDto()); }
+	 * 
+	 * @Test public void rejectPendingWalletCreditUnitTest() {
+	 * PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
+	 * pendingWalletCreditDto.setCreated_by_id(1); pendingWalletCreditDto.setId(2);
+	 * ObjectResponse<PendingWalletCredit> response =
+	 * pendingWalletCreditService.rejectPendingWalletCredit(pendingWalletCreditDto);
+	 * System.out.println(response.getResponseMessage() + " - " +
+	 * response.getDto()); }
+	 */
 }

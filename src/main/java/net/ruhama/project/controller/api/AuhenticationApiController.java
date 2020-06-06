@@ -31,11 +31,11 @@ public class AuhenticationApiController {
 		return response;
 	}
 	
-	@Deprecated
 	@PostMapping("/api/verifyAndLogin")
 	public ObjectResponse<UserProfileDto> verifyAndLogin(@RequestBody OtpDto otpDto){
 		System.out.println(otpDto);
 		ObjectResponse<UserProfileDto> response = userAuthentication.verifyAndLogin(otpDto);
+		System.out.println(response);
 		return response;
 	}
 }

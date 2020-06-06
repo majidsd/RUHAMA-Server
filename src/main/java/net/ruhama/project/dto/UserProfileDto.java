@@ -13,10 +13,26 @@ import net.ruhama.project.util.UserStatus;
  */
 public class UserProfileDto {
 
+	private Integer id;
 	private String fullName;
 	private Integer phoneNumber;
+	private Integer walletId;
 	private UserStatus status;
 	private Collection<AuthorityDto> authorities;
+	
+	 
+	public Integer getWalletId() {
+		return walletId;
+	}
+	public void setWalletId(Integer walletId) {
+		this.walletId = walletId;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getFullName() {
 		return fullName;
 	}
@@ -43,8 +59,8 @@ public class UserProfileDto {
 	}
 	@Override
 	public String toString() {
-		return "UserProfileDto [fullName=" + fullName + ", phoneNumber=" + phoneNumber + ", status=" + status
-				+ ", authorities=" + authorities + "]";
+		return "UserProfileDto [id=" + id + ", fullName=" + fullName + ", phoneNumber=" + phoneNumber + ", walletId="
+				+ walletId + ", status=" + status + ", authorities=" + authorities + "]";
 	}
 
 }

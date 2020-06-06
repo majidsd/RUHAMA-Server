@@ -34,7 +34,7 @@ public class DonationServiceUnitsTest {
 		donationDto.setCreated_by_id(1);
 		donationDto.setDonator_id(1);
 		donationDto.setInfo("Helping with it.");
-		ObjectResponse<Donation> response = donationService.donate(donationDto);
+		ObjectResponse<DonationDto> response = donationService.donate(donationDto);
 		System.out.println(response);
 	}
 	
@@ -53,7 +53,7 @@ public class DonationServiceUnitsTest {
 	public void getCaseDonationsUnitTest() {
 		DonationDto donationDto = new DonationDto();
 		donationDto.setCase_id(1);
-		ListResponse<Donation> response = donationService.getCaseDonations(donationDto);
+		ListResponse<DonationDto> response = donationService.getCaseDonations(donationDto);
 		System.out.println(response);
 	}
 	
@@ -71,7 +71,7 @@ public class DonationServiceUnitsTest {
 	public void getUserDonationsUnitTest() {
 		DonationDto donationDto = new DonationDto();
 		donationDto.setDonator_id(1);
-		ListResponse<Donation> response = donationService.getUserDonations(donationDto);
+		ListResponse<DonationDto> response = donationService.getUserDonations(donationDto);
 		System.out.println(response);
 	}
 	

@@ -5,6 +5,7 @@ package net.ruhama.project.serviceImp;
 
 import java.util.Date;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,9 @@ public class WalletServiceImp implements IWalletService {
 	
 	@Autowired
 	private IWalletHistoryService walletHistoryService;
+	
+	@Autowired
+	private ModelMapper mapper;
 	
 	@Override
 	public ObjectResponse<Wallet> addWallet(WalletDto walletDto) {
@@ -92,9 +96,10 @@ public class WalletServiceImp implements IWalletService {
 	}
 
 	@Override
-	public ObjectResponse<Wallet> credit(WalletDto walletDto) {
-		ObjectResponse<Wallet> response;
+	public ObjectResponse<WalletDto> credit(WalletDto walletDto) {
+		ObjectResponse<WalletDto> response;
 		Wallet wallet = walletRepository.getOne(walletDto.getId());
+		WalletDto mappedWallet = null;
 		WalletHistoryDto walletHistoryDto;
 		
 		if(wallet != null) {
@@ -108,15 +113,19 @@ public class WalletServiceImp implements IWalletService {
 				wallet.setCurrent_balance(newBalance);
 				wallet.setLast_update(new Date());
 				Wallet updatedWallet = walletRepository.save(wallet);
+				mappedWallet = mapper.map(updatedWallet, WalletDto.class);
+				mappedWallet.setAmount(updatedWallet.getCurrent_balance());
+				mappedWallet.setCreated_by_id(updatedWallet.getCreated_by() == null ? null : updatedWallet.getCreated_by().getId());
+				mappedWallet.setOwner_id(updatedWallet.getOwner() == null? null: updatedWallet.getOwner().getId());
 				walletHistoryDto.setDescrtption("Credit " + walletDto.getAmount() + " And new balance is "+updatedWallet.getCurrent_balance());
 				walletHistoryService.addWalletHistory(walletHistoryDto);
-				response = new ObjectResponse<Wallet>(ResponseEnum.SUCCESS, updatedWallet);
+				response = new ObjectResponse<WalletDto>(ResponseEnum.SUCCESS, mappedWallet);
 			} else {
-				response = new ObjectResponse<Wallet>(ResponseEnum.NEGATIVE_AMOUNT, null);
+				response = new ObjectResponse<WalletDto>(ResponseEnum.NEGATIVE_AMOUNT, null);
 			}
 			
 		}else {
-			response = new ObjectResponse<Wallet>(ResponseEnum.ITEM_NOT_FOUND, null);
+			response = new ObjectResponse<WalletDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 		}
 		return response;
 	}
