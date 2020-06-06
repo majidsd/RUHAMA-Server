@@ -47,12 +47,7 @@ public class WalletServiceImp implements IWalletService {
 		Wallet wallet;
 		try {
 			wallet = new Wallet();
-			User owner = userRepository.getOne(walletDto.getOwner_id());
-			User creater = userRepository.getOne(walletDto.getCreated_by_id());
 			try {
-				wallet.setOwner(owner);
-				wallet.setCreated_by(creater);
-				wallet.setLast_update_by(creater);
 				wallet.setCreated_at(new Date());
 				wallet.setLast_update(new Date());
 				wallet.setCurrent_balance(walletDto.getAmount());
@@ -115,8 +110,6 @@ public class WalletServiceImp implements IWalletService {
 				Wallet updatedWallet = walletRepository.save(wallet);
 				mappedWallet = mapper.map(updatedWallet, WalletDto.class);
 				mappedWallet.setAmount(updatedWallet.getCurrent_balance());
-				mappedWallet.setCreated_by_id(updatedWallet.getCreated_by() == null ? null : updatedWallet.getCreated_by().getId());
-				mappedWallet.setOwner_id(updatedWallet.getOwner() == null? null: updatedWallet.getOwner().getId());
 				walletHistoryDto.setDescrtption("Credit " + walletDto.getAmount() + " And new balance is "+updatedWallet.getCurrent_balance());
 				walletHistoryService.addWalletHistory(walletHistoryDto);
 				response = new ObjectResponse<WalletDto>(ResponseEnum.SUCCESS, mappedWallet);

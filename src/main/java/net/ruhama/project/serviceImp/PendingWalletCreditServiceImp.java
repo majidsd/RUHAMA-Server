@@ -94,7 +94,6 @@ public class PendingWalletCreditServiceImp implements IPendingWalletCreditServic
 					WalletDto walletDto = new WalletDto();
 					walletDto.setAmount(pendingWalletCredit.getAmount());
 					walletDto.setId(wallet.getId());
-					walletDto.setOwner_id(wallet.getOwner().getId());
 					walletDto.setCreated_by_id(pendingWalletCreditDto.getCreated_by_id());
 					if(walletService.credit(walletDto).getResponseCode() == ResponseEnum.SUCCESS.getResponseCode()) {
 						response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, pendingWalletCreditRepository.save(pendingWalletCredit));

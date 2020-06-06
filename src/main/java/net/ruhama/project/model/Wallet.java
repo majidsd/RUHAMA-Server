@@ -31,24 +31,12 @@ public class Wallet {
 	@JoinColumn(name="current_balance", nullable = false)
 	private Double current_balance;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="owner", nullable = true, unique = true)
-	private User owner;
 	
 	@JoinColumn(name="created_at", nullable = false)
 	private Date created_at;
 	
 	@JoinColumn(name="last_update", nullable = false)
 	private Date last_update;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="created_by", nullable = true)
-	private User created_by;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="last_update_by", nullable = true)
-	private User last_update_by;
-
 	/**
 	 * @return the id
 	 */
@@ -77,19 +65,6 @@ public class Wallet {
 		this.current_balance = current_balance;
 	}
 
-	/**
-	 * @return the owner
-	 */
-	public User getOwner() {
-		return owner;
-	}
-
-	/**
-	 * @param owner the owner to set
-	 */
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
 	
 	/**
 	 * @return the created_at
@@ -119,39 +94,10 @@ public class Wallet {
 		this.last_update = last_update;
 	}
 
-	/**
-	 * @return the created_by
-	 */
-	public User getCreated_by() {
-		return created_by;
-	}
-
-	/**
-	 * @param created_by the created_by to set
-	 */
-	public void setCreated_by(User created_by) {
-		this.created_by = created_by;
-	}
-
-	/**
-	 * @return the last_update_by
-	 */
-	public User getLast_update_by() {
-		return last_update_by;
-	}
-
-	/**
-	 * @param last_update_by the last_update_by to set
-	 */
-	public void setLast_update_by(User last_update_by) {
-		this.last_update_by = last_update_by;
-	}
-	
 	@Override
 	public String toString() {
-		return "Wallet [id=" + id + ", current_balance=" + current_balance + ", owner=" + owner + ", created_at="
-				+ created_at + ", last_update=" + last_update + ", created_by=" + created_by + ", last_update_by="
-				+ last_update_by + "]";
+		return "Wallet [id=" + id + ", current_balance=" + current_balance + ", created_at=" + created_at
+				+ ", last_update=" + last_update + "]";
 	}
 
 }

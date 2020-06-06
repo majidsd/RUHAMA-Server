@@ -1,0 +1,1 @@
+INSERT INTO wallet('id','created_at','current_balance','last_update') VALUES (1,'2020-06-06',0.0,'2020-06-06');
