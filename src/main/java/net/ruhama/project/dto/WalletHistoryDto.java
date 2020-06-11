@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class WalletHistoryDto {
 	
+	private Integer id;
 	private Integer wallet_id;
 	private Double amount;
 	private Byte operation;
@@ -18,7 +19,21 @@ public class WalletHistoryDto {
 	private Date from_date;
 	private Date to_date;
 	private Integer created_by_id;
+	private Date created_at;
 	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Date getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
 	/**
 	 * @return the wallet_id
 	 */
@@ -105,9 +120,9 @@ public class WalletHistoryDto {
 	}
 	@Override
 	public String toString() {
-		return "WalletHistoryDto [wallet_id=" + wallet_id + ", amount=" + amount + ", operation=" + operation
-				+ ", descrtption=" + descrtption + ", from_date=" + from_date + ", to_date=" + to_date
-				+ ", created_by_id=" + created_by_id + "]";
+		return "WalletHistoryDto [id=" + id + ", wallet_id=" + wallet_id + ", amount=" + amount + ", operation="
+				+ operation + ", descrtption=" + descrtption + ", from_date=" + from_date + ", to_date=" + to_date
+				+ ", created_by_id=" + created_by_id + ", created_at=" + created_at + "]";
 	}
 	
 }

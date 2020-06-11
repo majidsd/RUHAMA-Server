@@ -152,13 +152,14 @@ public class WalletHistoryServiceImp implements IWalletHistoryService  {
 	}
 
 	private WalletHistoryDto toDto(WalletHistory wh) {
-		// TODO Auto-generated method stub
 		WalletHistoryDto whd = new WalletHistoryDto();
+		whd.setId(wh.getId());
 		whd.setAmount(wh.getAmount());
 		whd.setCreated_by_id(wh.getCreated_by()==null?null:wh.getCreated_by().getId());
 		whd.setDescrtption(wh.getDescription());
 		whd.setWallet_id(wh.getWallet().getId());
 		whd.setOperation(wh.getOperation());
+		whd.setCreated_at(wh.getCreated_at());
 		return whd;
 	}
 
