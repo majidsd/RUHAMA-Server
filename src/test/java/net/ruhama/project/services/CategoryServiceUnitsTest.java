@@ -3,16 +3,7 @@
  */
 package net.ruhama.project.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import net.ruhama.project.model.Category;
-import net.ruhama.project.service.ICategoriesService;
-import net.ruhama.project.util.CategoryStatus;
 
 /**
  * @author MaJiD
@@ -21,29 +12,21 @@ import net.ruhama.project.util.CategoryStatus;
 @SpringBootTest
 public class CategoryServiceUnitsTest {
 
-	@Autowired
-	private ICategoriesService categoryService;
-	
-	@Test
-	public void addCategoryUnitTest() {
-		Category category = new Category();
-		Category savedCategory = null;
-		category.setName_ar("تبرع مسجد");
-		category.setName("building");
-		category.setType("Test building");
-		category.setType_ar("اختبار اخر");
-		category.setMax_budget(200000d);
-		category.setDescription("This is just to describe the application.");
-		category.setStatus(CategoryStatus.ACTIVE);
-		try {
-			
-			savedCategory = categoryService.addCategory(category);
-		} catch (Exception e) {
-			System.out.println("addCategoryUnitTest ---------> " + e.getLocalizedMessage());
-		}
-		if(savedCategory != null)
-			System.out.println(savedCategory);
-	}
+	/*
+	 * @Autowired private ICategoriesService categoryService;
+	 * 
+	 * @Test public void addCategoryUnitTest() { Category category = new Category();
+	 * Category savedCategory = null; category.setName_ar("تبرع مسجد");
+	 * category.setName("building"); category.setType("Test building");
+	 * category.setType_ar("اختبار اخر"); category.setMax_budget(200000d);
+	 * category.setDescription("This is just to describe the application.");
+	 * category.setStatus(CategoryStatus.ACTIVE); try {
+	 * 
+	 * savedCategory = categoryService.addCategory(category); } catch (Exception e)
+	 * { System.out.println("addCategoryUnitTest ---------> " +
+	 * e.getLocalizedMessage()); } if(savedCategory != null)
+	 * System.out.println(savedCategory); }
+	 */
 	
 	/*
 	 * @Test public void activateCategoryUnitTest() { Object activateCategory =
