@@ -17,6 +17,7 @@ import net.ruhama.project.model.Case;
 import net.ruhama.project.model.Donation;
 import net.ruhama.project.model.User;
 import net.ruhama.project.model.Wallet;
+import net.ruhama.project.repo.AuthorityRepository;
 import net.ruhama.project.repo.CaseRepository;
 import net.ruhama.project.repo.DonationRepository;
 import net.ruhama.project.repo.UserRepository;
@@ -32,7 +33,8 @@ import net.ruhama.project.util.ResponseEnum;
  */
 @Service
 public class DonationServiceImp implements IDonationService {
-	
+	private final String ANONYMOUS_USERNAME = "anonymous";
+	private final String AGENT_AUTHORITY = "AGENT";
 	@Autowired
 	private DonationRepository donationRepository;
 	
@@ -47,6 +49,9 @@ public class DonationServiceImp implements IDonationService {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private AuthorityRepository authorityRepo;
 
 	@Override
 	public ObjectResponse<DonationDto> donate(DonationDto donationDto) {
@@ -59,6 +64,9 @@ public class DonationServiceImp implements IDonationService {
 		try {
 			if(donationDto.getAmount() > 0) {
 				doner = userRepository.getOne(donationDto.getDonator_id());
+				if(doner.getAuthorities().contains(authorityRepo.findByAuthorityName(AGENT_AUTHORITY)) && donationDto.isAnonymous()) {
+					doner = userRepository.findByUsername(ANONYMOUS_USERNAME);
+				}
 				wallet = doner.getWallet();
 				the_case = caseRepository.getOne(donationDto.getCase_id());
 				creater = userRepository.getOne(donationDto.getCreated_by_id());
