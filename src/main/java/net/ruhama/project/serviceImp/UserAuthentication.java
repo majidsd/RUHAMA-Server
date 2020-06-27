@@ -97,18 +97,18 @@ public class UserAuthentication implements IUserAuthentication {
 			user = new User();
 			user.setPhoneNumber(otp.getPhoneNumber());
 			user.setStatus(UserStatus.ACTIVE);
-			user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("ROLE_USER")));
 			if(otp.isAgent()) {
-				wallet = new Wallet();
-				wallet.setCreated_at(new Date());
-				wallet.setCurrent_balance(0.0);
-				wallet.setLast_update(new Date());
-				Wallet savedWallet = walletRepo.save(wallet);
-				user.setWallet(savedWallet);
+				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("USER")));
+				
 			} else {
-				wallet = walletRepo.getOne(1);
-				user.setWallet(wallet);
+				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("AGENT")));
 			}
+			wallet = new Wallet();
+			wallet.setCreated_at(new Date());
+			wallet.setCurrent_balance(0.0);
+			wallet.setLast_update(new Date());
+			Wallet savedWallet = walletRepo.save(wallet);
+			user.setWallet(savedWallet);
 			user = userRepo.save(user);
 		}
 		return user;

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import net.ruhama.project.dto.WalletDto;
 import net.ruhama.project.dto.WalletHistoryDto;
-import net.ruhama.project.model.User;
 import net.ruhama.project.model.Wallet;
-import net.ruhama.project.repo.UserRepository;
 import net.ruhama.project.repo.WalletRepository;
 import net.ruhama.project.response.ListResponse;
 import net.ruhama.project.response.ObjectResponse;
@@ -29,9 +27,6 @@ import net.ruhama.project.util.WalletOperations;
 @Service
 public class WalletServiceImp implements IWalletService {
 	
-	@Autowired
-	private UserRepository userRepository;
-
 	@Autowired
 	private WalletRepository walletRepository;
 	

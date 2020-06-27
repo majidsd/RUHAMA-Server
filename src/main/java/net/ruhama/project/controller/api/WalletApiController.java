@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.ruhama.project.dto.PendingWalletCreditDto;
 import net.ruhama.project.dto.WalletDto;
 import net.ruhama.project.dto.WalletHistoryDto;
 import net.ruhama.project.response.ListResponse;
 import net.ruhama.project.response.ObjectResponse;
+import net.ruhama.project.service.IPendingWalletCreditService;
 import net.ruhama.project.service.IWalletHistoryService;
 import net.ruhama.project.service.IWalletService;
 
@@ -30,7 +32,10 @@ public class WalletApiController {
 	IWalletService walletService;
 	
 	@Autowired
-	IWalletHistoryService walletHistoryService;
+	private IPendingWalletCreditService walletCreditService;
+	
+	@Autowired
+	private IWalletHistoryService walletHistoryService;
 
 	@GetMapping("/getBalance/{walletId}")
 	public ObjectResponse<Double> getBalance(@PathVariable Integer walletId){
@@ -40,9 +45,23 @@ public class WalletApiController {
 		return response;
 	}
 	
-	@PostMapping("/credit")
-	public ObjectResponse<WalletDto> creditWallet(@RequestBody WalletDto walletDto){
-		ObjectResponse<WalletDto> response = walletService.credit(walletDto);
+	@PostMapping("/requestCredit")
+	public ObjectResponse<PendingWalletCreditDto> creditWallet(@RequestBody PendingWalletCreditDto pendingWalletCreditDto){
+		ObjectResponse<PendingWalletCreditDto> response = walletCreditService.addPendingWalletCredit(pendingWalletCreditDto);
+		return response;
+	}
+	
+	//accounts admin
+	@PostMapping("/approveCredit")
+	public ObjectResponse<PendingWalletCreditDto> approveCredit(@RequestBody PendingWalletCreditDto pendingWalletCreditDto){
+		ObjectResponse<PendingWalletCreditDto> response = walletCreditService.approvePendingWalletCredit(pendingWalletCreditDto);
+		return response;
+	}
+	
+	//accounts admin
+	@PostMapping("/rejectCredit")
+	public ObjectResponse<PendingWalletCreditDto> rejectCredit(@RequestBody PendingWalletCreditDto pendingWalletCreditDto){
+		ObjectResponse<PendingWalletCreditDto> response = walletCreditService.approvePendingWalletCredit(pendingWalletCreditDto);
 		return response;
 	}
 	

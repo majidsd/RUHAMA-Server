@@ -23,21 +23,23 @@ public class PendingWalletCreditRequestsUnitTests {
 	@Autowired
 	private IPendingWalletCreditService pendingWalletCreditService;
 
-	@Test
-	public void addPendingWalletRequestUnitTests() {
-		PendingWalletCreditDto pendingWalletCreditDto = new PendingWalletCreditDto();
-		pendingWalletCreditDto.setAmount(10000.0);
-		pendingWalletCreditDto.setBank("BoK");
-		pendingWalletCreditDto.setBranch("Abid Khatim");
-		pendingWalletCreditDto.setCreated_by_id(1);
-		pendingWalletCreditDto.setDescription("I need to credit my wallet.");
-		pendingWalletCreditDto.setReceipt_imgUrl("C://test/test.img");
-		pendingWalletCreditDto.setReceipt_no("1232434323");
-		pendingWalletCreditDto.setWallet_id(2);
-		
-		ObjectResponse<PendingWalletCredit> response = pendingWalletCreditService.addPendingWalletCredit(pendingWalletCreditDto);
-		System.out.println(response.getResponseMessage() + " - " + response.getDto());
-	}
+	/*
+	 * @Test public void addPendingWalletRequestUnitTests() { PendingWalletCreditDto
+	 * pendingWalletCreditDto = new PendingWalletCreditDto();
+	 * pendingWalletCreditDto.setAmount(10000.0);
+	 * pendingWalletCreditDto.setBank("BoK");
+	 * pendingWalletCreditDto.setBranch("Abid Khatim");
+	 * pendingWalletCreditDto.setCreated_by_id(1);
+	 * pendingWalletCreditDto.setDescription("I need to credit my wallet.");
+	 * pendingWalletCreditDto.setReceipt_imgUrl("C://test/test.img");
+	 * pendingWalletCreditDto.setReceipt_no("1232434323");
+	 * pendingWalletCreditDto.setWallet_id(2);
+	 * 
+	 * ObjectResponse<PendingWalletCreditDto> response =
+	 * pendingWalletCreditService.addPendingWalletCredit(pendingWalletCreditDto);
+	 * System.out.println(response.getResponseMessage() + " - " +
+	 * response.getDto()); }
+	 */
 	
 	/*
 	 * @Test public void getPendingWalletCreditUnitTest() { PendingWalletCreditDto

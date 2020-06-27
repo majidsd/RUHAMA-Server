@@ -11,7 +11,7 @@ public class PendingWalletCreditDto {
 	private Integer id;
 	private Integer wallet_id;
 	private Double amount;
-	private Byte status;
+	private Byte   status;
 	private String bank;
 	private String branch;
 	private String receipt_no;

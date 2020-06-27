@@ -3,8 +3,11 @@
  */
 package net.ruhama.project.serviceImp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,9 @@ import net.ruhama.project.util.ResponseEnum;
 public class PendingWalletCreditServiceImp implements IPendingWalletCreditService {
 
 	@Autowired
+	ModelMapper mapper;
+	
+	@Autowired
 	private PendingWalletCreditRepository pendingWalletCreditRepository;
 	
 	@Autowired
@@ -39,8 +45,8 @@ public class PendingWalletCreditServiceImp implements IPendingWalletCreditServic
 	private UserRepository userRepository;
 	
 	@Override
-	public ObjectResponse<PendingWalletCredit> addPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto) {
-		ObjectResponse<PendingWalletCredit> response;
+	public ObjectResponse<PendingWalletCreditDto> addPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto) {
+		ObjectResponse<PendingWalletCreditDto> response;
 		PendingWalletCredit pendingWalletCredit;
 		Wallet wallet;
 		User user;
@@ -64,24 +70,25 @@ public class PendingWalletCreditServiceImp implements IPendingWalletCreditServic
 					pendingWalletCredit.setCreated_by(user);
 					pendingWalletCredit.setLast_update_by(user);
 					PendingWalletCredit newPendingWalletCredit = pendingWalletCreditRepository.save(pendingWalletCredit);
-					response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, newPendingWalletCredit);
+					PendingWalletCreditDto mappedPendingWalletCreditDto = mapper.map(newPendingWalletCredit, PendingWalletCreditDto.class);
+					response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.SUCCESS, mappedPendingWalletCreditDto);
 				} else {
-					response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.ITEM_NOT_FOUND, null);
+					response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 				}
 			} else {
-				response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.NEGATIVE_AMOUNT, null);
+				response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.NEGATIVE_AMOUNT, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN);
+			response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN);
 		}
 		return response;
 	}
 
 	@Override
-	public ObjectResponse<PendingWalletCredit> approvePendingWalletCredit(
+	public ObjectResponse<PendingWalletCreditDto> approvePendingWalletCredit(
 			PendingWalletCreditDto pendingWalletCreditDto) {
-		ObjectResponse<PendingWalletCredit> response;
+		ObjectResponse<PendingWalletCreditDto> response;
 		PendingWalletCredit pendingWalletCredit;
 		try {
 			pendingWalletCredit = pendingWalletCreditRepository.getOne(pendingWalletCreditDto.getId());
@@ -91,32 +98,33 @@ public class PendingWalletCreditServiceImp implements IPendingWalletCreditServic
 				pendingWalletCredit.setLast_update_by(userRepository.getOne(pendingWalletCreditDto.getCreated_by_id()));
 				Wallet wallet = walletService.getWallet(pendingWalletCredit.getWallet().getId()).getDto();
 				if (wallet != null) {
-					WalletDto walletDto = new WalletDto();
+					WalletDto walletDto = mapper.map(wallet, WalletDto.class);
 					walletDto.setAmount(pendingWalletCredit.getAmount());
 					walletDto.setId(wallet.getId());
 					walletDto.setCreated_by_id(pendingWalletCreditDto.getCreated_by_id());
+					walletDto.setOwner_id(pendingWalletCreditDto.getCreated_by_id());
 					if(walletService.credit(walletDto).getResponseCode() == ResponseEnum.SUCCESS.getResponseCode()) {
-						response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, pendingWalletCreditRepository.save(pendingWalletCredit));
+						response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.SUCCESS, mapper.map(pendingWalletCreditRepository.save(pendingWalletCredit),PendingWalletCreditDto.class));
 					} else {
-						response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN, null);
+						response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN, null);
 					}
 				} else {
-					response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.ITEM_NOT_FOUND, null);
+					response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 				}
 			} else {
-				response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN);
+			response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN);
 		}
 		return response;
 	}
 	
 	@Override
-	public ObjectResponse<PendingWalletCredit> rejectPendingWalletCredit(
+	public ObjectResponse<PendingWalletCreditDto> rejectPendingWalletCredit(
 			PendingWalletCreditDto pendingWalletCreditDto) {
-		ObjectResponse<PendingWalletCredit> response;
+		ObjectResponse<PendingWalletCreditDto> response;
 		PendingWalletCredit pendingWalletCredit;
 		try {
 			pendingWalletCredit = pendingWalletCreditRepository.getOne(pendingWalletCreditDto.getId());
@@ -124,56 +132,60 @@ public class PendingWalletCreditServiceImp implements IPendingWalletCreditServic
 				pendingWalletCredit.setStatus(PendingWalletCreditStatus.REJECTED.getValue());
 				pendingWalletCredit.setLast_update(new Date());
 				pendingWalletCredit.setLast_update_by(userRepository.getOne(pendingWalletCreditDto.getCreated_by_id()));
-				response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, pendingWalletCreditRepository.save(pendingWalletCredit));
+				response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.SUCCESS, mapper.map(pendingWalletCreditRepository.save(pendingWalletCredit),PendingWalletCreditDto.class));
 			} else {
-				response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN, null);
+			response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
 
 	@Override
-	public ObjectResponse<PendingWalletCredit> getPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto) {
-		ObjectResponse<PendingWalletCredit> response;
+	public ObjectResponse<PendingWalletCreditDto> getPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto) {
+		ObjectResponse<PendingWalletCreditDto> response;
 		try {
-			response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, pendingWalletCreditRepository.getOne(pendingWalletCreditDto.getId()));
+			response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.SUCCESS, mapper.map(pendingWalletCreditRepository.getOne(pendingWalletCreditDto.getId()),PendingWalletCreditDto.class));
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN, null);
+			response = new ObjectResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
 
 	@Override
-	public ListResponse<PendingWalletCredit> getAllPendingWalletCredits() {
-		ListResponse<PendingWalletCredit> response;
+	public ListResponse<PendingWalletCreditDto> getAllPendingWalletCredits() {
+		ListResponse<PendingWalletCreditDto> response;
 		try {
-			response = new ListResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, pendingWalletCreditRepository.getWalletsPendingCredit(PendingWalletCreditStatus.NEW.getValue()));
+			List<PendingWalletCreditDto> pwcds = new ArrayList<>();
+			pendingWalletCreditRepository.getWalletsPendingCredit( PendingWalletCreditStatus.NEW.getValue()).forEach(p -> pwcds.add(mapper.map(pwcds, PendingWalletCreditDto.class)));
+			response = new ListResponse<PendingWalletCreditDto>(ResponseEnum.SUCCESS, pwcds);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ListResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
 
 	@Override
-	public ListResponse<PendingWalletCredit> getUserPendingWalletCredits(
+	public ListResponse<PendingWalletCreditDto> getUserPendingWalletCredits(
 			PendingWalletCreditDto pendingWalletCreditDto) {
-		ListResponse<PendingWalletCredit> response;
+		ListResponse<PendingWalletCreditDto> response;
 		Wallet wallet;
 		try {
 			wallet = walletService.getWallet(pendingWalletCreditDto.getWallet_id()).getDto();
 			if (wallet != null) {
-				response = new ListResponse<PendingWalletCredit>(ResponseEnum.SUCCESS, pendingWalletCreditRepository.getWalletPendingCredit(wallet, PendingWalletCreditStatus.NEW.getValue()));
+				List<PendingWalletCreditDto> pwcds = new ArrayList<>();
+				pendingWalletCreditRepository.getWalletPendingCredit(wallet, PendingWalletCreditStatus.NEW.getValue()).forEach(p -> pwcds.add(mapper.map(pwcds, PendingWalletCreditDto.class)));
+				response = new ListResponse<PendingWalletCreditDto>(ResponseEnum.SUCCESS, pwcds);
 			} else {
-				response = new ListResponse<PendingWalletCredit>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ListResponse<PendingWalletCreditDto>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ListResponse<PendingWalletCredit>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<PendingWalletCreditDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}

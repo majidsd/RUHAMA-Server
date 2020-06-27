@@ -4,7 +4,6 @@
 package net.ruhama.project.service;
 
 import net.ruhama.project.dto.PendingWalletCreditDto;
-import net.ruhama.project.model.PendingWalletCredit;
 import net.ruhama.project.response.ListResponse;
 import net.ruhama.project.response.ObjectResponse;
 
@@ -14,16 +13,16 @@ import net.ruhama.project.response.ObjectResponse;
  */
 public interface IPendingWalletCreditService {
 	
-	public ObjectResponse<PendingWalletCredit> addPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
+	public ObjectResponse<PendingWalletCreditDto> addPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
-	public ObjectResponse<PendingWalletCredit> approvePendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
+	public ObjectResponse<PendingWalletCreditDto> approvePendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
-	public ObjectResponse<PendingWalletCredit> rejectPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
+	public ObjectResponse<PendingWalletCreditDto> rejectPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
-	public ObjectResponse<PendingWalletCredit> getPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
+	public ObjectResponse<PendingWalletCreditDto> getPendingWalletCredit(PendingWalletCreditDto pendingWalletCreditDto);
 	
-	public ListResponse<PendingWalletCredit> getAllPendingWalletCredits();
+	public ListResponse<PendingWalletCreditDto> getAllPendingWalletCredits();
 	
-	public ListResponse<PendingWalletCredit> getUserPendingWalletCredits(PendingWalletCreditDto pendingWalletCreditDto);
+	public ListResponse<PendingWalletCreditDto> getUserPendingWalletCredits(PendingWalletCreditDto pendingWalletCreditDto);
 
 }
