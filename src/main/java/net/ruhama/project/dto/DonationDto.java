@@ -20,6 +20,7 @@ public class DonationDto {
 	private String info;
 	private Integer created_by_id;
 	private Date donation_date;
+	private boolean anonymous;
 	/**
 	 * @return the id
 	 */
@@ -135,10 +136,18 @@ public class DonationDto {
 	public void setDonation_date(Date donation_date) {
 		this.donation_date = donation_date;
 	}
+	
+	public boolean isAnonymous() {
+		return anonymous;
+	}
+	public void setAnonymous(boolean anonymous) {
+		this.anonymous = anonymous;
+	}
 	@Override
 	public String toString() {
 		return "DonationDto [id=" + id + ", donator_id=" + donator_id + ", case_id=" + case_id + ", amount=" + amount
 				+ ", start_date=" + start_date + ", end_date=" + end_date + ", new_case_id=" + new_case_id + ", info="
-				+ info + ", created_by_id=" + created_by_id + ", donation_date=" + donation_date + "]";
+				+ info + ", created_by_id=" + created_by_id + ", donation_date=" + donation_date + ", anonymous="
+				+ anonymous + "]";
 	}
 }
