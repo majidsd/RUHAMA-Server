@@ -5,6 +5,8 @@ package net.ruhama.project.dto;
 
 import java.util.Collection;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import net.ruhama.project.util.UserStatus;
 
 /**
@@ -18,7 +20,7 @@ public class UserProfileDto {
 	private Integer phoneNumber;
 	private Integer walletId;
 	private UserStatus status;
-	private Collection<AuthorityDto> authorities;
+	private Collection<GrantedAuthority> authorities;
 	
 	 
 	public Integer getWalletId() {
@@ -51,10 +53,10 @@ public class UserProfileDto {
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
-	public Collection<AuthorityDto> getAuthorities() {
+	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
-	public void setAuthorities(Collection<AuthorityDto> authorities) {
+	public void setAuthorities(Collection<GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
 	@Override

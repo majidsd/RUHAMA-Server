@@ -6,6 +6,7 @@ package net.ruhama.project.dto;
 import java.util.Collection;
 import java.util.Date;
 
+import net.ruhama.project.model.Authority;
 import net.ruhama.project.util.UserStatus;
 
 /**
@@ -24,7 +25,7 @@ public class UserDto {
 	private UserStatus status;
 	private Date created_at;
 	private Date updated_at;
-	private Collection<AuthorityDto> authorities;
+	private Collection<Authority> authorities;
 	
 	
 	public Integer getId() {
@@ -33,10 +34,10 @@ public class UserDto {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Collection<AuthorityDto> getAuthorities() {
+	public Collection<Authority> getAuthorities() {
 		return authorities;
 	}
-	public void setAuthorities(Collection<AuthorityDto> authorities) {
+	public void setAuthorities(Collection<Authority> authorities) {
 		this.authorities = authorities;
 	}
 	public String getFullName() {
@@ -108,7 +109,7 @@ public class UserDto {
 	
 	
 	public UserDto(String fullName, String username, String password, String password2,
-			Collection<AuthorityDto> authorities) {
+			Collection<Authority> authorities) {
 		this();
 		this.fullName = fullName;
 		this.username = username;

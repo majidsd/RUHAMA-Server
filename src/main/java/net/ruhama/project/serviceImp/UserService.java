@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import net.ruhama.project.dto.UserDto;
@@ -34,6 +35,9 @@ public class UserService implements IUserService, UserDetailsService {
 	private UserRepository userRepo;
 	
 	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
 	private AuthorityRepository authRepo;
 	
 	@Autowired
@@ -45,6 +49,7 @@ public class UserService implements IUserService, UserDetailsService {
 		Collection<Authority> userAuths = user.getAuths();
 		userAuths.forEach(a -> a = authRepo.save(a));
 		user.setAuthorities(userAuths);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user = userRepo.save(user);
 		userDto = mm.map(user, UserDto.class);
 		return new ObjectResponse<UserDto>(100, "Success", userDto);
@@ -98,7 +103,9 @@ public class UserService implements IUserService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return userRepo.findByUsername(username);
+		User user = userRepo.findByUsername(username);
+		System.out.println("load by zift" + user.getPassword() + user);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
 	}
 
 }

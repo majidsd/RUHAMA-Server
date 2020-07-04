@@ -76,4 +76,13 @@ public class Authority implements GrantedAuthority {
 		return authorityName;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Authority [id=" + id + ", authorityName=" + authorityName + ", authorityDescription="
+				+ authorityDescription + "]";
+	}
+
+	
 }

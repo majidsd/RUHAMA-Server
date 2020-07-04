@@ -9,6 +9,7 @@ import java.util.Random;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import net.ruhama.project.dto.OtpDto;
@@ -21,6 +22,7 @@ import net.ruhama.project.repo.OtpRepository;
 import net.ruhama.project.repo.UserRepository;
 import net.ruhama.project.repo.WalletRepository;
 import net.ruhama.project.response.ObjectResponse;
+import net.ruhama.project.security.SecurityConstants;
 import net.ruhama.project.service.IUserAuthentication;
 import net.ruhama.project.util.ResponseEnum;
 import net.ruhama.project.util.UserStatus;
@@ -37,6 +39,9 @@ public class UserAuthentication implements IUserAuthentication {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	@Autowired
 	private AuthorityRepository authRepo;
@@ -95,7 +100,9 @@ public class UserAuthentication implements IUserAuthentication {
 		Wallet wallet;
 		if(user == null) {
 			user = new User();
+			user.setUsername(otp.getPhoneNumber()+"");
 			user.setPhoneNumber(otp.getPhoneNumber());
+			user.setPassword(encoder.encode(SecurityConstants.FIXED_PASSWORD));
 			user.setStatus(UserStatus.ACTIVE);
 			if(otp.isAgent()) {
 				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("USER")));
