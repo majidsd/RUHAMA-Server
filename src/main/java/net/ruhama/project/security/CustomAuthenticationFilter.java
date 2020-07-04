@@ -64,7 +64,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         	UserProfileDto upd = userProfileResponse.getDto();
         	UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(upd.getPhoneNumber()+"",
             		SecurityConstants.FIXED_PASSWORD,  upd.getAuthorities());
-        	System.out.println("We are good untill here !!! " + upd);
             Authentication authentication = authenticationManager.authenticate(token);
             return authentication;
         } catch (IOException e) {

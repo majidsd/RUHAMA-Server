@@ -46,11 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
+                .antMatchers(SecurityConstants.SIGN_UP_URL, "/api/case/all", "/api/case/get/**").permitAll()
                 .antMatchers("/api/wallet/requestCredit")
                 .hasAuthority("USER")
-                .antMatchers("/api/wallet/approveCredit")
+                .antMatchers("/api/wallet/approveCredit","/api/wallet/rejectCredit","/api/case/create","/api/case/agent")
                 .hasAuthority("AGENT")
+                .antMatchers("/api/donation/**")
+                .hasAnyAuthority("USER","AGENT")
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManager(), userAuthenticationService, passwordEncoder))

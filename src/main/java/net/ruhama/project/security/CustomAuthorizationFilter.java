@@ -58,7 +58,6 @@ public class CustomAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken authenticate(HttpServletRequest request) {
-    	System.out.println("this is the fagor");
         String token = request.getHeader(SecurityConstants.HEADER_NAME);
         if (token != null) {
             Claims user = Jwts.parser()

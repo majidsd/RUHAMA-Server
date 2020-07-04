@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +24,7 @@ import net.ruhama.project.repo.UserRepository;
 import net.ruhama.project.response.ListResponse;
 import net.ruhama.project.response.ObjectResponse;
 import net.ruhama.project.service.IUserService;
+import net.ruhama.project.util.ResponseEnum;
 
 /**
  * @author ahmedozy
@@ -104,8 +106,18 @@ public class UserService implements IUserService, UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		User user = userRepo.findByUsername(username);
-		System.out.println("load by zift" + user.getPassword() + user);
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+	}
+
+	@Override
+	public ObjectResponse<UserDto> getUser(String username) {
+		ObjectResponse<UserDto> response;
+		User user = userRepo.findByUsername(username);
+		if(user == null)
+			return new ObjectResponse<>(ResponseEnum.USER_NOT_EXIST);
+		UserDto userDto = mm.map(user,UserDto.class);
+		response = new ObjectResponse<UserDto>(ResponseEnum.SUCCESS, userDto);
+		return response;
 	}
 
 }

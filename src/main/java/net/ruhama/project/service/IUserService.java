@@ -17,5 +17,6 @@ public interface IUserService {
 	public ObjectResponse<UserDto> deleteUser(UserDto userDto);
 	public ObjectResponse<UserDto> getUser(Integer userId);
 	public ListResponse<UserDto> getAllUsers();
+	public ObjectResponse<UserDto> getUser(String username);
 
 }

@@ -18,6 +18,7 @@ public class UserDto {
 	private Integer id;
 	private String fullName;
 	private Integer phoneNumber;
+	private Integer walletId;
 	private String username;
 	private String password;
 	private String password2;
@@ -27,7 +28,12 @@ public class UserDto {
 	private Date updated_at;
 	private Collection<Authority> authorities;
 	
-	
+	public Integer getWalletId() {
+		return walletId;
+	}
+	public void setWalletId(Integer walletId) {
+		this.walletId = walletId;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -119,8 +125,8 @@ public class UserDto {
 	}
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", fullName=" + fullName + ", username=" + username + ", password=" + password
-				+ ", password2=" + password2 + ", enabled=" + enabled + ", status=" + status + ", created_at="
+		return "UserDto [id=" + id + ", fullName=" + fullName + ", phoneNumber=" + phoneNumber + ", walletId="
+				+ walletId + ", username=" + username + ", enabled=" + enabled + ", status=" + status + ", created_at="
 				+ created_at + ", updated_at=" + updated_at + ", authorities=" + authorities + "]";
 	}
 	

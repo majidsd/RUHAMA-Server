@@ -105,10 +105,9 @@ public class UserAuthentication implements IUserAuthentication {
 			user.setPassword(encoder.encode(SecurityConstants.FIXED_PASSWORD));
 			user.setStatus(UserStatus.ACTIVE);
 			if(otp.isAgent()) {
-				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("USER")));
-				
-			} else {
 				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("AGENT")));
+			} else {
+				user.setAuthorities(Arrays.asList(authRepo.findByAuthorityName("USER")));
 			}
 			wallet = new Wallet();
 			wallet.setCreated_at(new Date());
