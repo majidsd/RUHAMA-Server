@@ -3,6 +3,8 @@
  */
 package net.ruhama.project.controller.api;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +63,7 @@ public class CaseApiController {
 	}
 	
 	@PostMapping("/create")
-	public ObjectResponse<CaseDto> createCase(Authentication authentication, @RequestBody CaseDto caseDto){
+	public ObjectResponse<CaseDto> createCase(Authentication authentication, @RequestBody @Valid CaseDto caseDto){
 		ObjectResponse<CaseDto> response;
 		Claims claims = (Claims) authentication.getPrincipal();
 		ObjectResponse<?> userResponse = userService.getUser(claims.getSubject());

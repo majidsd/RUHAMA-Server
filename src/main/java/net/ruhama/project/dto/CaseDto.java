@@ -5,6 +5,8 @@ package net.ruhama.project.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+
 import net.ruhama.project.util.CaseStatus;
 
 /**
@@ -19,6 +21,7 @@ public class CaseDto {
 	private String imgUrl;
 	private Double targetDonations;
 	private Double currentDonations;
+	@Min(message = "{caseDto.donorsCount}", value = 0)
 	private Integer donorsCount;
 	private Integer shareCount;
 	private String date;
